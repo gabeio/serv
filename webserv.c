@@ -211,14 +211,14 @@ void process_rq( char *rq, int fd )
 		return;
 	}
 
-	char test[100] = "http://eve.kean.edu/bin/save.cgi?todo=go+shopping+at+PathMart&action=save.cgi";
-	char *t, temp[100]="", *queryString;
-	char resultString[100]="";
-	int indexLength=0, index=0, tempIndex=0;
+	//char test[100] = "http://eve.kean.edu/bin/save.cgi?todo=go+shopping+at+PathMart&action=save.cgi";
+	//char *t, temp[100]="", *queryString;
+	//char resultString[100]="";
+	//int indexLength=0, index=0, tempIndex=0;
 	//find the "?" and the length of the string with "?"-- query string
-	queryString=strstr(arg, "?");
-	queryString++;//advance to next character to exclude '?'
-	printf("queryString: %s\n", queryString);
+	//queryString=strstr(arg, "?");
+	//queryString++;//advance to next character to exclude '?'
+	//printf("queryString: %s\n", queryString);
 
 	if(strcmp(cmd,"POST")== 0)
 	{

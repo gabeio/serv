@@ -194,59 +194,63 @@ void do_cat(char *f, int fd)
    rq is HTTP command:  GET /foo/bar.html HTTP/1.0
    ------------------------------------------------------ */
 
-int process_rq( char *rq, int fd )
+void process_rq( char *rq, int fd )
 {
-	printf("process the request!");
+	printf("process the request!\n");
 	char	cmd[BUFSIZ], arg[BUFSIZ];
 
 	// create a new process and return if not the child
 	if ( fork() != 0 )
-		return 1;
+	{
+		return;
+	}
 
 	strcpy(arg, "./");		// precede args with ./
 	if ( sscanf(rq, "%s%s", cmd, arg+2) != 2 )
-		return 1;
+	{
+		return;
+	}
 
-	//char test[100] = "http://eve.kean.edu/bin/save.cgi?todo=go+shopping+at+PathMart&action=save.cgi";
+	char test[100] = "http://eve.kean.edu/bin/save.cgi?todo=go+shopping+at+PathMart&action=save.cgi";
 	char *t, temp[100]="", *queryString;
 	char resultString[100]="";
 	int indexLength=0, index=0, tempIndex=0;
-	//find the "?" and the lenght of the string with "?"-- query string
+	//find the "?" and the length of the string with "?"-- query string
 	queryString=strstr(arg, "?");
 	queryString++;//advance to next character to exclude '?'
 	printf("queryString: %s\n", queryString);
 
-	if(strcmp(cmd,"POST")== 1)
+	if(strcmp(cmd,"POST")== 0)
 	{
 		printf("arg: %s\n", arg);
 		poster( arg, fd ); // if post
 	}
 	else if((strcmp(cmd,"GET") != 0))
 	{
-		printf("!get");
+		printf("!get\n");
 		cannot_do(fd); // if not get / post
 	}
 	else if ( not_exist( arg ) )
 	{
-		printf("not_exist");
+		printf("not_exist\n");
 		do_404(arg, fd ); // error 404
 	}
 	else if ( isadir( arg ) )
 	{
-		printf("isaDir");
+		printf("isaDir\n");
 		do_ls( arg, fd ); // if folder print ls output
 	}
 	else if ( ends_in_cgi( arg ) )
 	{
-		printf("CGI!");
+		printf("CGI!\n");
 		do_exec( arg, fd ); // if cgi exec it and send output
 	}
 	else
 	{
-		printf("uh?");
+		printf("uh?\n");
 		do_cat( arg, fd ); // if html like just print internals
 	}
-	return 0;
+	return;
 }
 
 int main(int ac, char *av[])
@@ -264,10 +268,10 @@ int main(int ac, char *av[])
 	}
 	
 	sock = make_server_socket( atoi(av[1]) );
-	
+
 	if ( sock == -1 )
 	{
-		printf("can't open socket.");
+		printf("can't open socket.\n");
 		exit(2);
 	}
 
@@ -281,7 +285,7 @@ int main(int ac, char *av[])
 
 		// read request //
 		fgets(request,BUFSIZ,fpin);
-		printf("got a call: request = %s", request);
+		printf("got a call: request = %s\n", request);
 		read_til_crnl(fpin);
 
 		// do what client asks

@@ -44,7 +44,7 @@ int make_server_socket_q(int portnum)//, int backlog)
 	gethostname(hostname, HOSTLEN);         // where am I ?         //
 	hp = gethostbyname(hostname);           // get info about host  //
 	                                        // fill in host part    //
-	bcopy( (void *)hp->h_addr, (void *)&saddr.sin_addr, hp->h_length);
+	//bcopy((void *)hp->h_addr,(void *)&saddr.sin_addr,hp->h_length);
 	saddr.sin_port = htons(portnum);        // fill in socket port  //
 	saddr.sin_family = AF_INET ;            // fill in addr family  //
 	if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )

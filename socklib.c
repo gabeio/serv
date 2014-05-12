@@ -27,7 +27,7 @@
 
 //int make_server_socket_q(int , int );
 
-int make_server_socket_q(int portnum, int backlog)
+int make_server_socket_q(int portnum)//, int backlog)
 {
 	struct  sockaddr_in   saddr;   // build our address here //
 	struct	hostent		*hp;   // this is part of our    //
@@ -54,8 +54,10 @@ int make_server_socket_q(int portnum, int backlog)
 
 	/// arrange for incoming calls ///
 
-	if ( listen(sock_id, backlog) != 0 ) 
+	if ( listen(sock_id, BACKLOG) != 0 )
+	{
 		return -1;
+	}
 	return sock_id;
 }
 
